@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Austin",
+    "slug": "austin-tx",
+    "state": "Texas",
+    "stateAbbr": "TX",
+    "medianHomePrice": 525000,
+    "propertyTaxRate": 1.8,
+    "avgHOA": 220,
+    "avgRate30yr": 7.18,
+    "population": 978908,
+    "description": "Austin is the capital of Texas and one of the fastest-growing cities in the US, known for its tech industry and vibrant culture."
+  },
+  {
+    "name": "Denver",
+    "slug": "denver-co",
+    "state": "Colorado",
+    "stateAbbr": "CO",
+    "medianHomePrice": 565000,
+    "propertyTaxRate": 0.55,
+    "avgHOA": 310,
+    "avgRate30yr": 7.18,
+    "population": 715522,
+    "description": "Denver, the Mile High City, is Colorado's capital and largest city, renowned for its proximity to the Rocky Mountains and booming real estate market."
+  },
+  {
+    "name": "Nashville",
+    "slug": "nashville-tn",
+    "state": "Tennessee",
+    "stateAbbr": "TN",
+    "medianHomePrice": 425000,
+    "propertyTaxRate": 0.72,
+    "avgHOA": 180,
+    "avgRate30yr": 7.18,
+    "population": 689447,
+    "description": "Nashville is Tennessee's capital and Music City, experiencing rapid population growth driven by a strong job market and relatively affordable housing."
+  },
+  {
+    "name": "Phoenix",
+    "slug": "phoenix-az",
+    "state": "Arizona",
+    "stateAbbr": "AZ",
+    "medianHomePrice": 415000,
+    "propertyTaxRate": 0.63,
+    "avgHOA": 150,
+    "avgRate30yr": 7.18,
+    "population": 1608139,
+    "description": "Phoenix is Arizona's capital and the fifth-largest city in the US, offering warm weather, growing job opportunities, and relatively accessible home prices."
+  },
+  {
+    "name": "Charlotte",
+    "slug": "charlotte-nc",
+    "state": "North Carolina",
+    "stateAbbr": "NC",
+    "medianHomePrice": 385000,
+    "propertyTaxRate": 1.05,
+    "avgHOA": 160,
+    "avgRate30yr": 7.18,
+    "population": 874579,
+    "description": "Charlotte is the largest city in North Carolina and a major financial center, offering a strong job market and some of the most affordable housing among major US metros."
+  }
+]
