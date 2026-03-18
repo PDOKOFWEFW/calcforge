@@ -57,7 +57,7 @@ export async function generateMetadata({
       city.avgHOA
   );
 
-  const title = `${city.name}, ${city.stateAbbr} Mortgage Calculator — 2025 Monthly Payment Estimator`;
+  const title = `${city.name}, ${city.stateAbbr} Mortgage Calculator — ${new Date().getFullYear()} Monthly Payment Estimator`;
   const description = `Free ${city.name} mortgage calculator. Based on median home price of ${formatCurrency(city.medianHomePrice)} and ${city.avgRate30yr}% rate, est. monthly payment is ${formatCurrency(monthlyTotal)}. Includes ${city.propertyTaxRate}% property tax + HOA.`;
 
   return {
