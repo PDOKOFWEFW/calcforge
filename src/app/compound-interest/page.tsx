@@ -34,7 +34,7 @@ export default function CompoundInterestPage() {
         <div className="bg-white border border-stone-200 rounded-2xl p-6">
           <h2 className="font-display text-xl text-stone-900 mb-3">What is compound interest?</h2>
           <p className="text-sm text-stone-600 leading-relaxed">
-            Compound interest means you earn interest on your interest, not just your original principal. Over time, this creates exponential growth — commonly called the "snowball effect." Albert Einstein reportedly called it the eighth wonder of the world.
+            Compound interest means you earn interest on your interest, not just your original principal. Over time, this creates exponential growth — commonly called the &ldquo;snowball effect.&rdquo; Albert Einstein reportedly called it the eighth wonder of the world.
           </p>
         </div>
         <div className="bg-white border border-stone-200 rounded-2xl p-6">

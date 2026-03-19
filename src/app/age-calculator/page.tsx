@@ -54,7 +54,7 @@ export default function AgeCalculatorPage() {
       <section className="mt-8 grid md:grid-cols-2 gap-6">
         <div className="bg-white border border-stone-200 rounded-2xl p-6">
           <h2 className="font-semibold text-stone-800 mb-2">How is age calculated?</h2>
-          <p className="text-sm text-stone-500 leading-relaxed">Age is calculated from your date of birth to today. We count the exact number of completed years, then remaining months, then remaining days — giving you a precise answer like "35 years, 4 months, and 12 days."</p>
+          <p className="text-sm text-stone-500 leading-relaxed">Age is calculated from your date of birth to today. We count the exact number of completed years, then remaining months, then remaining days — giving you a precise answer like &ldquo;35 years, 4 months, and 12 days.&rdquo;</p>
         </div>
         <div className="bg-white border border-stone-200 rounded-2xl p-6">
           <h2 className="font-semibold text-stone-800 mb-2">What is a leap year birthday?</h2>
