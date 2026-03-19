@@ -1,47 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Base resets ─────────────────────────────────────────── */
-@layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-  }
+/* ── Design Tokens ──────────────────────────────────────── */
+:root {
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
 
-  html {
-    scroll-behavior: smooth;
-  }
+  /* Brand palette */
+  --navy: #0a1628;
+  --navy-mid: #112240;
+  --blue: #1a56db;
+  --blue-light: #e8f0fe;
+  --teal: #0d9488;
+  --teal-light: #ccfbf1;
+  --gold: #d97706;
+  --gold-light: #fef3c7;
 
-  /* Range input cross-browser styling */
-  input[type="range"] {
-    @apply h-1.5 rounded-full cursor-pointer appearance-none bg-gray-200;
-  }
+  /* Neutrals */
+  --stone-50: #fafaf9;
+  --stone-100: #f5f5f4;
+  --stone-200: #e7e5e4;
+  --stone-300: #d6d3d1;
+  --stone-600: #57534e;
+  --stone-800: #292524;
+  --stone-900: #1c1917;
 
-  input[type="range"]::-webkit-slider-thumb {
-    @apply appearance-none w-4 h-4 rounded-full bg-brand-600 shadow cursor-pointer;
-    margin-top: -5px;
-  }
-
-  input[type="range"]::-moz-range-thumb {
-    @apply w-4 h-4 rounded-full bg-brand-600 shadow cursor-pointer border-none;
-  }
-
-  /* Number input: hide spinners */
-  input[type="number"]::-webkit-outer-spin-button,
-  input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  input[type="number"] {
-    -moz-appearance: textfield;
-  }
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.10), 0 4px 12px rgba(0,0,0,0.06);
+  --shadow-blue: 0 4px 20px rgba(26,86,219,0.18);
 }
 
-/* ── Utility classes ─────────────────────────────────────── */
-@layer utilities {
-  .tabular-nums {
-    font-variant-numeric: tabular-nums;
-  }
+/* ── Base ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--stone-50);
+  color: var(--stone-900);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ── Typography ─────────────────────────────────────────── */
+.font-display { font-family: var(--font-display); }
+.font-mono    { font-family: var(--font-mono); }
+
+/* ── Range Inputs ───────────────────────────────────────── */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 99px;
+  background: var(--stone-200);
+  cursor: pointer;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(26,86,219,0.35);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(26,86,219,0.45);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: var(--blue);
+  border: 2px solid white;
+  box-shadow: 0 1px 4px rgba(26,86,219,0.35);
+  cursor: pointer;
+}
+
+/* ── Number Inputs ──────────────────────────────────────── */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+input[type="number"] { -moz-appearance: textfield; }
+
+/* ── Animations ─────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up  { animation: fadeUp 0.4s ease both; }
+.animate-fade-in  { animation: fadeIn 0.3s ease both; }
+.animate-count-up { animation: countUp 0.3s ease both; }
+
+/* Staggered children */
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.10s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.20s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+
+/* ── Ad zone placeholder styles ─────────────────────────── */
+.ad-zone {
+  background: linear-gradient(135deg, var(--stone-100) 0%, var(--stone-50) 100%);
+  border: 1.5px dashed var(--stone-300);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--stone-600);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+}
+
+/* ── Utility ─────────────────────────────────────────────── */
+.tabular-nums { font-variant-numeric: tabular-nums; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }

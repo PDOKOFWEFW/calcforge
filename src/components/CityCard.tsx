@@ -7,64 +7,56 @@ interface Props {
 }
 
 export default function CityCard({ city }: Props) {
-  // Quick preview: 20% down, 30yr
   const loanAmount = city.medianHomePrice * 0.8;
-  const monthlyRate = city.avgRate30yr / 100 / 12;
-  const numPayments = 360;
-  const monthlyPI =
-    (loanAmount * (monthlyRate * Math.pow(1 + monthlyRate, numPayments))) /
-    (Math.pow(1 + monthlyRate, numPayments) - 1);
+  const r = city.avgRate30yr / 100 / 12;
+  const n = 360;
+  const monthlyPI = (loanAmount * (r * Math.pow(1 + r, n))) / (Math.pow(1 + r, n) - 1);
   const monthlyTax = (city.medianHomePrice * city.propertyTaxRate) / 100 / 12;
-  const totalMonthly = monthlyPI + monthlyTax + city.avgHOA;
+  const total = monthlyPI + monthlyTax + city.avgHOA;
 
   return (
     <Link
       href={`/mortgage/${city.slug}`}
-      className="group block bg-white border border-gray-200 rounded-xl p-5 hover:border-brand-400 hover:shadow-md transition-all duration-200"
+      className="group block bg-white border border-stone-200 rounded-2xl p-5 hover:border-brand-300 hover:shadow-lg transition-all duration-200 hover:-translate-y-0.5"
     >
-      <div className="flex items-start justify-between mb-3">
+      {/* Header */}
+      <div className="flex items-start justify-between mb-4">
         <div>
-          <h3 className="font-semibold text-gray-900 group-hover:text-brand-600 transition-colors">
+          <h3 className="font-semibold text-stone-900 text-[15px] group-hover:text-brand-700 transition-colors leading-none">
             {city.name}, {city.stateAbbr}
           </h3>
-          <p className="text-xs text-gray-400 mt-0.5">
-            {city.population.toLocaleString()} residents
+          <p className="text-xs text-stone-400 mt-1">
+            {city.state} · {city.population.toLocaleString()} residents
           </p>
         </div>
-        <span className="text-xs bg-brand-50 text-brand-600 px-2 py-1 rounded-full font-medium">
-          {city.state}
+        <span className="w-10 h-10 rounded-xl bg-stone-100 group-hover:bg-brand-50 transition-colors flex items-center justify-center text-xs font-bold text-stone-500 group-hover:text-brand-600 font-mono flex-shrink-0">
+          {city.stateAbbr}
         </span>
       </div>
 
-      <div className="space-y-1.5 mb-4">
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Median home price</span>
-          <span className="font-medium text-gray-800">
-            {formatCurrency(city.medianHomePrice)}
-          </span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Property tax rate</span>
-          <span className="font-medium text-gray-800">{city.propertyTaxRate}%/yr</span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-gray-500">Avg HOA</span>
-          <span className="font-medium text-gray-800">
-            {formatCurrency(city.avgHOA)}/mo
-          </span>
-        </div>
+      {/* Stats */}
+      <div className="space-y-2 mb-4">
+        {[
+          { label: "Median home price", value: formatCurrency(city.medianHomePrice) },
+          { label: "Property tax", value: `${city.propertyTaxRate}%/yr` },
+          { label: "Average HOA", value: `${formatCurrency(city.avgHOA)}/mo` },
+        ].map(stat => (
+          <div key={stat.label} className="flex items-center justify-between text-sm">
+            <span className="text-stone-500">{stat.label}</span>
+            <span className="font-medium text-stone-700 tabular-nums">{stat.value}</span>
+          </div>
+        ))}
       </div>
 
-      {/* Estimated payment */}
-      <div className="bg-brand-50 rounded-lg px-4 py-3 flex items-center justify-between">
-        <span className="text-xs text-brand-700 font-medium">Est. monthly payment</span>
-        <span className="font-bold text-brand-700 text-lg font-mono">
-          {formatCurrency(totalMonthly)}
+      {/* Payment highlight */}
+      <div className="bg-gradient-to-r from-navy to-navy-mid rounded-xl px-4 py-3 flex items-center justify-between">
+        <span className="text-white/60 text-xs">Est. monthly</span>
+        <span className="text-white font-display text-xl tabular-nums">
+          {formatCurrency(total)}
         </span>
       </div>
-
-      <p className="text-xs text-gray-400 mt-2 text-right">
-        20% down · 30yr · {city.avgRate30yr}% APR →
+      <p className="text-[10px] text-stone-400 text-right mt-1.5">
+        20% down · 30yr · {city.avgRate30yr}% APR
       </p>
     </Link>
   );
