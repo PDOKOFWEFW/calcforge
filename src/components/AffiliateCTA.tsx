@@ -1,3 +1,5 @@
+import { formatCurrency } from "@/lib/mortgage";
+
 interface Props {
   cityName: string;
   monthlyPayment: number;
@@ -5,35 +7,21 @@ interface Props {
 }
 
 export default function AffiliateCTA({ cityName, monthlyPayment, variant = "inline" }: Props) {
-  const formatted = monthlyPayment.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
-
   if (variant === "sidebar") {
     return (
-      <div className="bg-gradient-to-br from-navy to-navy-mid rounded-2xl p-5 text-white">
+      <div className="bg-navy-gradient rounded-2xl p-5 text-white">
         <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center mb-3">
           <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
           </svg>
         </div>
-        <h3 className="font-semibold text-sm leading-snug mb-1">
-          Ready for a real rate in {cityName}?
-        </h3>
-        <p className="text-white/60 text-xs leading-relaxed mb-4">
-          Compare lenders in 2 minutes. See if you qualify for a lower monthly payment.
-        </p>
-        <a
-          href="https://www.lendingtree.com/"
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className="block w-full bg-white text-navy text-sm font-semibold text-center py-2.5 rounded-xl hover:bg-stone-100 transition-colors"
-        >
+        <h3 className="font-semibold text-sm mb-1">Ready for a real rate in {cityName}?</h3>
+        <p className="text-white/55 text-xs leading-relaxed mb-4">Compare lenders in 2 minutes. No credit score impact.</p>
+        <a href="https://www.lendingtree.com/" target="_blank" rel="noopener noreferrer sponsored"
+          className="block w-full bg-white text-navy text-sm font-bold text-center py-2.5 rounded-xl hover:bg-stone-100 transition-colors">
           Compare Rates →
         </a>
-        <p className="text-white/30 text-[10px] text-center mt-2">No credit score impact</p>
+        <p className="text-white/25 text-[10px] text-center mt-2">Sponsored · Rates vary by lender</p>
       </div>
     );
   }
@@ -45,26 +33,21 @@ export default function AffiliateCTA({ cityName, monthlyPayment, variant = "inli
           <div className="flex items-center gap-2 mb-1">
             <span className="w-5 h-5 rounded-full bg-brand-600 flex items-center justify-center flex-shrink-0">
               <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
               </svg>
             </span>
             <p className="text-sm font-semibold text-stone-800">
-              Get a real rate for {formatted}/mo in {cityName}
+              Get a real rate for {formatCurrency(monthlyPayment)}/mo in {cityName}
             </p>
           </div>
-          <p className="text-xs text-stone-500 leading-relaxed pl-7">
-            Compare offers from top lenders. Takes 2 minutes. No impact to your credit score.
-          </p>
+          <p className="text-xs text-stone-500 pl-7">Compare top lenders in 2 minutes. No credit score impact.</p>
         </div>
-        <a
-          href="https://www.lendingtree.com/"
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className="flex-shrink-0 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors shadow-blue hover:shadow-blue-lg duration-200 whitespace-nowrap"
-        >
+        <a href="https://www.lendingtree.com/" target="_blank" rel="noopener noreferrer sponsored"
+          className="flex-shrink-0 bg-brand-600 hover:bg-brand-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors whitespace-nowrap">
           Compare Lenders →
         </a>
       </div>
+      <p className="text-[10px] text-stone-400 mt-2 pl-0">Sponsored · Rates vary by lender and credit profile</p>
     </div>
   );
 }

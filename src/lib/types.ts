@@ -1,30 +1,22 @@
-// ============================================================
-// Core domain types
-// ============================================================
-
 export interface City {
   name: string;
   slug: string;
   state: string;
   stateAbbr: string;
   medianHomePrice: number;
-  propertyTaxRate: number; // annual percentage (e.g. 1.8 = 1.8%)
-  avgHOA: number;          // monthly dollars
-  avgRate30yr: number;     // annual percentage (e.g. 7.18 = 7.18%)
+  propertyTaxRate: number;
+  avgHOA: number;
+  avgRate30yr: number;
   population: number;
   description: string;
 }
 
-// ============================================================
-// Mortgage calculation types
-// ============================================================
-
 export interface MortgageInputs {
   homePrice: number;
-  downPaymentPct: number;   // percentage 0–100
-  interestRate: number;     // annual percentage
+  downPaymentPct: number;
+  interestRate: number;
   loanTermYears: number;
-  propertyTaxRate: number;  // annual percentage
+  propertyTaxRate: number;
   monthlyHOA: number;
 }
 

@@ -1,27 +1,8 @@
 import type { City } from "./types";
+import { formatCurrency } from "./mortgage";
 
-/**
- * Generates FAQ schema for a city mortgage page.
- * FAQ rich results increase CTR significantly in Google SERPs.
- */
-export function buildMortgageFAQSchema(city: City, monthlyPayment: number) {
-  const loanAmount = city.medianHomePrice * 0.8; // assume 20% down
-  const formattedPayment = monthlyPayment.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
-  const formattedPrice = city.medianHomePrice.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
-  const formattedLoan = loanAmount.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
-
+export function buildMortgageFAQSchema(city: City, monthlyPayment: number, totalMonthly: number) {
+  const requiredIncome = (totalMonthly / 0.28) * 12;
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -31,23 +12,23 @@ export function buildMortgageFAQSchema(city: City, monthlyPayment: number) {
         name: `What is the average mortgage payment in ${city.name}, ${city.state}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Based on ${city.name}'s median home price of ${formattedPrice} with a 20% down payment (${formattedLoan} loan) and the current 30-year fixed rate of ${city.avgRate30yr}%, the estimated monthly principal and interest payment is approximately ${formattedPayment}. This does not include property taxes or HOA fees.`,
+          text: `Based on ${city.name}'s median home price of ${formatCurrency(city.medianHomePrice)} with a 20% down payment and ${city.avgRate30yr}% rate, the estimated total monthly payment is ${formatCurrency(totalMonthly)}, including property tax and HOA.`,
         },
       },
       {
         "@type": "Question",
-        name: `What is the property tax rate in ${city.name}, ${city.stateAbbr}?`,
+        name: `What is the property tax rate in ${city.name}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `${city.name}, ${city.state} has an effective property tax rate of approximately ${city.propertyTaxRate}% of the assessed home value per year. On a ${formattedPrice} home, this equals roughly ${((city.medianHomePrice * city.propertyTaxRate) / 100 / 12).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} per month.`,
+          text: `${city.name}, ${city.state} has an effective property tax rate of approximately ${city.propertyTaxRate}% per year, equaling ${formatCurrency((city.medianHomePrice * city.propertyTaxRate) / 100 / 12)}/month on a ${formatCurrency(city.medianHomePrice)} home.`,
         },
       },
       {
         "@type": "Question",
-        name: `How much do I need to earn to afford a home in ${city.name}?`,
+        name: `How much income do I need to buy a home in ${city.name}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `The general guideline is that your mortgage payment should not exceed 28% of your gross monthly income. Based on ${city.name}'s median home price of ${formattedPrice}, you would need an annual gross income of approximately ${((monthlyPayment / 0.28) * 12).toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 })} to comfortably afford the estimated monthly payment.`,
+          text: `Using the 28% debt-to-income rule, you'd need approximately ${formatCurrency(requiredIncome)}/year in gross income to afford the estimated payment on a median-priced home in ${city.name}.`,
         },
       },
       {
@@ -55,59 +36,34 @@ export function buildMortgageFAQSchema(city: City, monthlyPayment: number) {
         name: `What are current 30-year mortgage rates in ${city.name}?`,
         acceptedAnswer: {
           "@type": "Answer",
-          text: `Current 30-year fixed mortgage rates in ${city.name}, ${city.state} are approximately ${city.avgRate30yr}%. Rates vary by lender, credit score, and down payment. Use our calculator above to see how different rates affect your monthly payment.`,
+          text: `Current 30-year fixed rates in ${city.name} are approximately ${city.avgRate30yr}%. The 15-year fixed rate is typically 0.5% lower, around ${(city.avgRate30yr - 0.5).toFixed(2)}%. Rates vary by lender and borrower profile.`,
         },
       },
     ],
   };
 }
 
-/**
- * BreadcrumbList schema for SERP breadcrumb display.
- */
 export function buildBreadcrumbSchema(city: City) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      {
-        "@type": "ListItem",
-        position: 1,
-        name: "Home",
-        item: "https://calcforge.com",
-      },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: "Mortgage Calculator",
-        item: "https://calcforge.com/mortgage",
-      },
-      {
-        "@type": "ListItem",
-        position: 3,
-        name: `${city.name}, ${city.stateAbbr} Mortgage Calculator`,
-        item: `https://calcforge.com/mortgage/${city.slug}`,
-      },
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://calcforge.com" },
+      { "@type": "ListItem", position: 2, name: "Mortgage Calculator", item: "https://calcforge.com/mortgage" },
+      { "@type": "ListItem", position: 3, name: `${city.name}, ${city.stateAbbr} Mortgage Calculator`, item: `https://calcforge.com/mortgage/${city.slug}` },
     ],
   };
 }
 
-/**
- * WebApplication schema — marks the page as an interactive tool.
- */
 export function buildWebAppSchema(city: City) {
   return {
     "@context": "https://schema.org",
     "@type": "WebApplication",
     name: `${city.name} Mortgage Calculator`,
-    description: `Free mortgage calculator for ${city.name}, ${city.state}. Estimate monthly payments based on local median home prices, property tax rates, and current interest rates.`,
+    description: `Free mortgage calculator for ${city.name}, ${city.state}. Pre-filled with local data.`,
     applicationCategory: "FinanceApplication",
     operatingSystem: "Web",
     url: `https://calcforge.com/mortgage/${city.slug}`,
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-    },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   };
 }
